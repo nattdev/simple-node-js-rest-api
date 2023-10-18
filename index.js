@@ -9,6 +9,12 @@ const tasks = [];
 // Create HTTP server
 const server = http.createServer((req, res) => {
 	const {pathname, query} = url.parse(req.url, true);
+	
+	if (req.method == 'GET' && pathname == '/tasks') {
+		res.setHeader('Content-Type', 'application/json');
+		res.statusCode = 200;
+		res.end(JSON.stringify({tasks}));
+	}
 });
 
 const port = process.env.PORT || 3000;
