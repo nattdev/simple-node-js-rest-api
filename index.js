@@ -30,6 +30,9 @@ const server = http.createServer((req, res) => {
 			res.statusCode = 201;
 			res.end(JSON.stringify({message: 'Task created', task: newTask}));
 		});
+	} else {
+		res.statusCode = 404;
+		res.end('Not Found');
 	}
 });
 
