@@ -14,6 +14,22 @@ const server = http.createServer((req, res) => {
 		res.setHeader('Content-Type', 'application/json');
 		res.statusCode = 200;
 		res.end(JSON.stringify({tasks}));
+	} else if (req.method == 'POST' && pathname == '/tasks') {
+		let body = '';
+
+		req.on('data', (data) => {
+			body += data;
+		});
+
+		req.on('end', () => {
+			const newTask = JSON.parse(body);
+			newTask.id = tasks.length + 1;
+			tasks.push(newTask);
+
+			res.setHeader('Content-Type', 'application/json');
+			res.statusCode = 201;
+			res.end(JSON.stringify({message: 'Task created', task: newTask}));
+		});
 	}
 });
 
